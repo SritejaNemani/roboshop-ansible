@@ -1,5 +1,5 @@
 - name: configure msql
-  hosts: mqsql
+  hosts: mysql
   become: yes
   tasks: 
   - name: install MySQL server
