@@ -1,4 +1,4 @@
-- name: cvatalogue configure
+- name: catalogue configure
   hosts: catalogue
   become: yes
   tasks: 
@@ -35,9 +35,9 @@
       dest: /app
       remote_src: yes
 
-  - name: Install dependencies
-    community.general.npm:
-      path: /app
+  # - name: Install dependencies
+  #   community.general.npm:
+  #     path: /app
 
   # - name: start and enable mongodb
   #   ansible.builtin.service: 

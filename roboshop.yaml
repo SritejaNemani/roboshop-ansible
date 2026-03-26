@@ -1,3 +1,4 @@
+# ansible playbook -i localhost, -e instances=['mongodb', 'catalogue', 'redis', 'user', 'cart', 'mysql', 'shipping', 'rabbitmq', 'payment', 'frontend'] roboshop.yaml
 - name: create ec2 and r53 records
   hosts: all
   connection: local
@@ -58,7 +59,6 @@
     - item.item == "frontend"
     - action == "create"
 
-
   - name: delete r53 records
     amazon.aws.route53:
       state: absent 
@@ -74,5 +74,6 @@
     amazon.aws.ec2_instance: 
       state: absent
       name: "{{ item }}-{{ environ }}"
+      wait: false
     loop: "{{ instances }}"
     when: action == "destroy"
