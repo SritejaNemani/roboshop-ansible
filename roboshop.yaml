@@ -19,7 +19,7 @@
       instance_type: "t3.micro"
       security_group: "{{ sg_id }}"
       image_id: "{{ ami_id }}"
-      wait: false
+      wait: true
       tags: 
         project: roboshop
         Component: "{{ item }}"
@@ -42,7 +42,7 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}" #here instances is list so we have to access by [0]
-      wait: false
+      wait: true
       overwrite: true
     loop: "{{ ec2_output.results }}"
     when: action == "create"
@@ -55,7 +55,7 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}" #here instances is list so we have to access by [0]
-      wait: false
+      wait: true
       overwrite: true
     loop: "{{ ec2_output.results }}"
     when: #and gate both shold bve true
