@@ -35,20 +35,20 @@
       src: /tmp/catalogue.zip
       dest: /app
 
-  - name: start and enable mongodb
-    ansible.builtin.service: 
-      name: mongod
-      enabled: yes
-      state: started
+  # - name: start and enable mongodb
+  #   ansible.builtin.service: 
+  #     name: mongod
+  #     enabled: yes
+  #     state: started
 
-  - name: allow remote connections
-    ansible.builtin.replace: 
-      path: /etc/mongod.conf
-      regexp: '127.0.0.1'
-      replace: '0.0.0.0'
+  # - name: allow remote connections
+  #   ansible.builtin.replace: 
+  #     path: /etc/mongod.conf
+  #     regexp: '127.0.0.1'
+  #     replace: '0.0.0.0'
 
-  - name: restart mongodb
-    ansible.builtin.service: 
-      name: mongod
-      enabled: yes
-      state: restarted
+  # - name: restart mongodb
+  #   ansible.builtin.service: 
+  #     name: mongod
+  #     enabled: yes
+  #     state: restarted
