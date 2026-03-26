@@ -29,7 +29,7 @@
       msg: "{{ ec2_output }}"
 
 
-  - name: Add new.foo.com as an A record with 3 IPs and wait until the changes have been replicated
+  - name: create r53 records
     amazon.aws.route53:
       state: present
       record: "{{ item.item }}-{{ environ }}.{{ domain_name }}" #mongodb-dev.nemani.online      #hete item is first loop under results - mongodb is an item in that so we are calling as item.item line#233 in output file
@@ -37,5 +37,5 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}" #here instances is list so we have to access by [0]
-      wait: true.
+      wait: true
     loop: "{{ ec2_output.results }}"
