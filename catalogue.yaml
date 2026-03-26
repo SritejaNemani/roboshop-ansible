@@ -35,10 +35,39 @@
       dest: /app
       remote_src: yes
 
-  # - name: Install dependencies
-  #   community.general.npm:
-  #     path: /app
+  - name: Install dependencies
+    community.general.npm:
+      path: /app
 
+  - name: copy catalogue service file here
+    ansible.builtin.copy: 
+      src: catalogue.service
+      dest: /etc/systemd/system/catalogue.service
+
+  - name: copy mongo repo here
+    ansible.builtin.copy: 
+      src: mongodb.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: install mongodb client
+    ansible.builtin.dnf: 
+      name: mongodb-mongosh 
+      state: present
+
+  - name: check if products loaded or not
+    ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    register: catalogue_output
+    
+  - name:  print the output
+    ansible.builtin.debug: 
+      msg: "{{ catalogue_output }}"
+
+  # - name: start and enable mongodb
+  #   ansible.builtin.service: 
+  #     name: mongod
+  #     enabled: yes
+  #     state: started
+  
   # - name: start and enable mongodb
   #   ansible.builtin.service: 
   #     name: mongod
