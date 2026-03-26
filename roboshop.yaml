@@ -19,6 +19,7 @@
       instance_type: "t3.micro"
       security_group: "{{ sg_id }}"
       image_id: "{{ ami_id }}"
+      wait: false
       tags: 
         project: roboshop
         Component: "{{ item }}"
@@ -33,7 +34,6 @@
       msg: "{{ ec2_output }}"
     when: action == "create"
 
-
   - name: create r53 records
     amazon.aws.route53:
       state: present
@@ -42,7 +42,8 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}" #here instances is list so we have to access by [0]
-      wait: true
+      wait: false
+      overwrite: true
     loop: "{{ ec2_output.results }}"
     when: action == "create"
 
@@ -54,7 +55,8 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}" #here instances is list so we have to access by [0]
-      wait: true
+      wait: false
+      overwrite: true
     loop: "{{ ec2_output.results }}"
     when: #and gate both shold bve true
     - item.item == "frontend"
