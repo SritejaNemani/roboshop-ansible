@@ -66,26 +66,9 @@
     ansible.builtin.shell: mongosh --host "{{ MONGODB_HOST }}"  </app/db/master-data.js
     when: catalogue_output.stdout | int < 0
 
-  # - name: start and enable mongodb
-  #   ansible.builtin.service: 
-  #     name: mongod
-  #     enabled: yes
-  #     state: started
+  - name: start and enable catalogue
+    ansible.builtin.service: 
+      name: catalogue
+      enabled: yes
+      state: started
   
-  # - name: start and enable mongodb
-  #   ansible.builtin.service: 
-  #     name: mongod
-  #     enabled: yes
-  #     state: started
-
-  # - name: allow remote connections
-  #   ansible.builtin.replace: 
-  #     path: /etc/mongod.conf
-  #     regexp: '127.0.0.1'
-  #     replace: '0.0.0.0'
-
-  # - name: restart mongodb
-  #   ansible.builtin.service: 
-  #     name: mongod
-  #     enabled: yes
-  #     state: restarted
