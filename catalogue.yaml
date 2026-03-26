@@ -35,6 +35,10 @@
       dest: /app
       remote_src: yes
 
+  - name: Install dependencies
+    community.general.npm:
+      path: /app
+
   # - name: start and enable mongodb
   #   ansible.builtin.service: 
   #     name: mongod

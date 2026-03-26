@@ -58,8 +58,21 @@
     - item.item == "frontend"
     - action == "create"
 
+
+  - name: delete r53 records
+    amazon.aws.route53:
+      state: absent 
+      record: "{{ item }}-{{ environ }}.{{ domain_name }}" #roboshop-dev.nemani.online      #hete item is first loop under results - mongodb is an item in that so we are calling as item.item line#233 in output file
+      zone: "{{ domain_name }}"
+      type: A
+      ttl: 1
+    loop: "{{ instances }}"
+    when: action == "destroy"
+
+
   - name: delete ec2 instance
     amazon.aws.ec2_instance: 
       state: absent
       name: "{{ item }}-{{ environ }}"
     loop: "{{ instances }}"
+    when: action == "destroy"
